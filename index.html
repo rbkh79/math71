@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
@@ -39,26 +40,46 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background-color: rgba(255, 255, 255, 0.9);
+      background-color: rgba(255, 255, 255, 0.95); /* Slightly more opaque */
       display: flex;
+      flex-direction: column; /* Stack message and spinner */
       justify-content: center;
       align-items: center;
       z-index: 10000;
       font-size: 1.2em;
       color: #333;
+      text-align: center;
+      padding: 20px;
+    }
+    .spinner {
+      border: 4px solid rgba(0, 0, 0, 0.1);
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border-left-color: #0ea5e9; /* sky-500 */
+      animation: spin 1s ease infinite;
+      margin-top: 20px; /* Space between text and spinner */
+    }
+    @keyframes spin {
+      0% {
+        transform: rotate(0deg);
+      }
+      100% {
+        transform: rotate(360deg);
+      }
     }
   </style>
 <script type="importmap">
 {
   "imports": {
-    "react": "https://esm.sh/react@^19.1.0",
+    "react": "https://esm.sh/react@18.2.0",
     "react-router-dom": "https://esm.sh/react-router-dom@^6.23.1",
-    "react/jsx-runtime": "https://esm.sh/react@^19.1.0/jsx-runtime",
-    "react-dom/client": "https://esm.sh/react-dom@^19.1.0/client",
+    "react/jsx-runtime": "https://esm.sh/react@18.2.0/jsx-runtime",
+    "react-dom/client": "https://esm.sh/react-dom@18.2.0/client",
     "@heroicons/react/24/outline": "https://esm.sh/@heroicons/react@2.1.4/24/outline",
+    "@heroicons/react/": "https://esm.sh/@heroicons/react@2.1.4/",
     "react-dom/": "https://esm.sh/react-dom@^19.1.0/",
-    "react/": "https://esm.sh/react@^19.1.0/",
-    "@heroicons/react/": "https://esm.sh/@heroicons/react@2.1.4/"
+    "react/": "https://esm.sh/react@^19.1.0/"
   }
 }
 </script>
@@ -67,12 +88,13 @@
 </head>
 <body>
   <noscript>برای اجرای این برنامه به جاوااسکریپت نیاز دارید.</noscript>
-  <div id="loading-babel">در حال بارگذاری و آماده‌سازی برنامه... لطفاً کمی صبر کنید.</div>
+  <div id="loading-babel">
+    <p>در حال بارگذاری و آماده‌سازی برنامه... لطفاً کمی صبر کنید.</p>
+    <div class="spinner"></div>
+  </div>
   <div id="root"></div>
 
   <!-- Load the main application script with type="text/babel" -->
-  <!-- data-type="module" tells Babel to treat this as an ES module -->
-  <!-- data-presets makes sure React and TypeScript syntax are transformed -->
   <script type="text/babel" data-presets="react,typescript" data-type="module" src="./index.tsx"></script>
 
   <script>
@@ -91,21 +113,18 @@
         hideLoadingMessage();
         const rootDiv = document.getElementById('root');
         if (rootDiv) {
-           rootDiv.innerHTML = '<p style="color: red; text-align: center; padding: 20px;">خطا در بارگذاری برنامه. لطفاً کنسول مرورگر را برای جزئیات بررسی کنید.</p>';
+           rootDiv.innerHTML = '<div style="color: red; text-align: center; padding: 20px; font-family: Tahoma, sans-serif;"><h1>خطا در بارگذاری برنامه</h1><p>مشکلی در بارگذاری یا اجرای اولیه برنامه رخ داده است. لطفاً کنسول مرورگر (کلید F12، تب Console) را برای جزئیات فنی بررسی کنید و در صورت امکان، خطا را به توسعه‌دهنده گزارش دهید.</p></div>';
         }
         console.error("Error loading or transpiling index.tsx with Babel.");
       };
     } else {
-        // Fallback if script tag isn't found for some reason
-        // This might happen if the script tag itself is malformed or removed before this runs
         console.error("Could not find the main application script tag (index.tsx).");
         hideLoadingMessage(); 
         const rootDiv = document.getElementById('root');
         if (rootDiv && !rootDiv.hasChildNodes()) { // Check if root is empty
-             rootDiv.innerHTML = '<p style="color: red; text-align: center; padding: 20px;">خطا در پیدا کردن اسکریپت اصلی برنامه. لطفاً ساختار HTML را بررسی کنید.</p>';
+             rootDiv.innerHTML = '<div style="color: red; text-align: center; padding: 20px; font-family: Tahoma, sans-serif;"><h1>خطای اساسی</h1><p>اسکریپت اصلی برنامه (index.tsx) پیدا نشد. لطفاً ساختار فایل HTML و مسیر اسکریپت را بررسی کنید.</p></div>';
         }
     }
   </script>
 </body>
-</html><link rel="stylesheet" href="index.css">
-<script src="index.tsx" type="module"></script>
+</html>
