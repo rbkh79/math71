@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>آموزش ریاضی هفتم</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV" crossorigin="anonymous">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js" integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG+vnGctmUb0ZYagI" crossorigin="anonymous"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax5gs0gSputKXdSp/KI65_SGe2vkCuxKNEk" crossorigin="anonymous"
+    onload="if (typeof window.renderMathInElement === 'function') { window.renderMathInElement(document.body, { delimiters: [ {left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}, {left: '\\(', right: '\\)', display: false}, {left: '\\[', right: '\\]', display: true} ], throwOnError: false }); } else { console.error('KaTeX auto-render: renderMathInElement not defined even in script onload.'); }">
+  </script>
+  <style>
+    body {
+      font-family: 'Tahoma', 'Helvetica Neue', Arial, sans-serif; /* Common Farsi font */
+      background-color: #f0f4f8; /* Light blue-gray background */
+    }
+    .katex-display {
+      text-align: center !important; /* Center block math */
+      margin: 1em 0 !important;
+    }
+    /* Custom scrollbar for better aesthetics */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #f1f1f1;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #888;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #555;
+    }
+    #loading-babel {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(255, 255, 255, 0.9);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 10000;
+      font-size: 1.2em;
+      color: #333;
+    }
+  </style>
+<script type="importmap">
+{
+  "imports": {
+    "react": "https://esm.sh/react@^19.1.0",
+    "react-router-dom": "https://esm.sh/react-router-dom@^6.23.1",
+    "react/jsx-runtime": "https://esm.sh/react@^19.1.0/jsx-runtime",
+    "react-dom/client": "https://esm.sh/react-dom@^19.1.0/client",
+    "@heroicons/react/24/outline": "https://esm.sh/@heroicons/react@2.1.4/24/outline",
+    "react-dom/": "https://esm.sh/react-dom@^19.1.0/",
+    "react/": "https://esm.sh/react@^19.1.0/",
+    "@heroicons/react/": "https://esm.sh/@heroicons/react@2.1.4/"
+  }
+}
+</script>
+<!-- Babel Standalone for in-browser JSX/TypeScript compilation -->
+<script src="https://unpkg.com/@babel/standalone@7.24.0/babel.min.js"></script>
+</head>
+<body>
+  <noscript>برای اجرای این برنامه به جاوااسکریپت نیاز دارید.</noscript>
+  <div id="loading-babel">در حال بارگذاری و آماده‌سازی برنامه... لطفاً کمی صبر کنید.</div>
+  <div id="root"></div>
+
+  <!-- Load the main application script with type="text/babel" -->
+  <!-- data-type="module" tells Babel to treat this as an ES module -->
+  <!-- data-presets makes sure React and TypeScript syntax are transformed -->
+  <script type="text/babel" data-presets="react,typescript" data-type="module" src="./index.tsx"></script>
+
+  <script>
+    // Hide loading message once React app is likely mounted or if Babel fails
+    const hideLoadingMessage = () => {
+      const loadingElement = document.getElementById('loading-babel');
+      if (loadingElement) {
+        loadingElement.style.display = 'none';
+      }
+    };
+
+    const loadingScript = document.querySelector('script[src="./index.tsx"]');
+    if (loadingScript) {
+      loadingScript.onload = hideLoadingMessage;
+      loadingScript.onerror = () => {
+        hideLoadingMessage();
+        const rootDiv = document.getElementById('root');
+        if (rootDiv) {
+           rootDiv.innerHTML = '<p style="color: red; text-align: center; padding: 20px;">خطا در بارگذاری برنامه. لطفاً کنسول مرورگر را برای جزئیات بررسی کنید.</p>';
+        }
+        console.error("Error loading or transpiling index.tsx with Babel.");
+      };
+    } else {
+        // Fallback if script tag isn't found for some reason
+        // This might happen if the script tag itself is malformed or removed before this runs
+        console.error("Could not find the main application script tag (index.tsx).");
+        hideLoadingMessage(); 
+        const rootDiv = document.getElementById('root');
+        if (rootDiv && !rootDiv.hasChildNodes()) { // Check if root is empty
+             rootDiv.innerHTML = '<p style="color: red; text-align: center; padding: 20px;">خطا در پیدا کردن اسکریپت اصلی برنامه. لطفاً ساختار HTML را بررسی کنید.</p>';
+        }
+    }
+  </script>
+</body>
+</html><link rel="stylesheet" href="index.css">
+<script src="index.tsx" type="module"></script>
